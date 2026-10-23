@@ -1,0 +1,12 @@
+node_modules/
+dist/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+# The Deploy tab's infrastructure repository is a separate git repository inside this folder.
+infra/
+deploy-infra/
