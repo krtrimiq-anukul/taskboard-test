@@ -10,3 +10,4 @@ venv/
 # The Deploy tab's infrastructure repository is a separate git repository inside this folder.
 infra/
 deploy-infra/
+.sdlc/state/
