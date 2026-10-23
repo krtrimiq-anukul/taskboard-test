@@ -11,4 +11,6 @@ venv/
 infra/
 deploy-infra/
 .sdlc/state/
-.sdlc/*
+*/.sdlc/*
+.sdlc
+../.sdlc
