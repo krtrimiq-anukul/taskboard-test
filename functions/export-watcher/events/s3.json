@@ -1,0 +1,24 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "us-east-1",
+      "eventTime": "2026-01-01T12:00:00Z",
+      "eventName": "ObjectCreated:Put",
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "bucket": {
+          "name": "files-bucket",
+          "arn": "arn:aws:s3:::files-bucket"
+        },
+        "object": {
+          "key": "exports/example.json",
+          "size": 1024,
+          "eTag": "d41d8cd98f00b204e9800998ecf8427e",
+          "sequencer": "0055AED6DCD90281E5"
+        }
+      }
+    }
+  ]
+}

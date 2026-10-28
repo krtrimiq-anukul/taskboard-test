@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "functions": [
+    {
+      "id": "export-watcher",
+      "path": "functions/export-watcher",
+      "package": "zip",
+      "architecture": "x86_64",
+      "memory": 256,
+      "timeout": 120,
+      "triggers": [
+        {
+          "type": "s3",
+          "service": "files",
+          "prefix": "exports/"
+        }
+      ],
+      "runtime": "python3.13",
+      "handler": "lambda_function.handler"
+    },
+    {
+      "id": "task-worker",
+      "path": "functions/task-worker",
+      "package": "zip",
+      "architecture": "x86_64",
+      "memory": 256,
+      "timeout": 60,
+      "triggers": [
+        {
+          "type": "sqs",
+          "service": "task-events"
+        }
+      ],
+      "runtime": "python3.13",
+      "handler": "lambda_function.handler"
+    },
+    {
+      "id": "heartbeat",
+      "path": "functions/heartbeat",
+      "package": "zip",
+      "architecture": "x86_64",
+      "memory": 256,
+      "timeout": 120,
+      "triggers": [
+        {
+          "type": "schedule",
+          "expression": "rate(5 minutes)"
+        }
+      ],
+      "runtime": "nodejs22.x",
+      "handler": "index.handler"
+    },
+    {
+      "id": "hello",
+      "path": "functions/hello",
+      "package": "zip",
+      "architecture": "x86_64",
+      "memory": 256,
+      "timeout": 30,
+      "triggers": [
+        {
+          "type": "http",
+          "method": "GET",
+          "path": "/fn/hello"
+        }
+      ],
+      "runtime": "python3.13",
+      "handler": "lambda_function.handler"
+    }
+  ]
+}

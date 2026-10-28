@@ -1,0 +1,31 @@
+{
+  "version": "2.0",
+  "routeKey": "GET /fn/hello",
+  "rawPath": "/fn/hello",
+  "rawQueryString": "name=world",
+  "headers": {
+    "content-type": "application/json",
+    "host": "example.execute-api.us-east-1.amazonaws.com"
+  },
+  "queryStringParameters": {
+    "name": "world"
+  },
+  "requestContext": {
+    "accountId": "123456789012",
+    "apiId": "example",
+    "domainName": "example.execute-api.us-east-1.amazonaws.com",
+    "requestId": "sample-request",
+    "routeKey": "GET /fn/hello",
+    "stage": "$default",
+    "time": "01/Jan/2026:12:00:00 +0000",
+    "timeEpoch": 1767268800000,
+    "http": {
+      "method": "GET",
+      "path": "/fn/hello",
+      "protocol": "HTTP/1.1",
+      "sourceIp": "203.0.113.10",
+      "userAgent": "sample"
+    }
+  },
+  "isBase64Encoded": false
+}

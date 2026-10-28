@@ -1,0 +1,20 @@
+{
+  "Records": [
+    {
+      "messageId": "059f36b4-87a3-44ab-83d2-661975830a7d",
+      "receiptHandle": "sample-receipt-handle",
+      "body": "{\"orderId\":42}",
+      "attributes": {
+        "ApproximateReceiveCount": "1",
+        "SentTimestamp": "1767268800000",
+        "SenderId": "AIDAEXAMPLE",
+        "ApproximateFirstReceiveTimestamp": "1767268800001"
+      },
+      "messageAttributes": {},
+      "md5OfBody": "e4e68fb7bd0e697a0ae8f1bb342846b3",
+      "eventSource": "aws:sqs",
+      "eventSourceARN": "arn:aws:sqs:us-east-1:123456789012:task-events",
+      "awsRegion": "us-east-1"
+    }
+  ]
+}
