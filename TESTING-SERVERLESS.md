@@ -19,13 +19,13 @@ Why not fitness-tracker: it keeps its data in a SQLite file inside the app folde
 | [5. Backups and recovery](#test-5--backups-and-recovery) | Back up data, Recover data | 30 min |
 | [6. A failing deploy on Lambda](#test-6--a-failing-deploy-on-lambda) | What happens when a health check fails | 15 min, plus 20 to switch back from Fargate |
 | [7. ECS on Fargate](#test-7--ecs-on-fargate) | Switching to Fargate, load balancer, automatic rollback | 40 min |
-| [8. Custom domain (optional)](#test-8--custom-domain-optional) | HTTPS on your own domain | 30 min |
+| [8. Custom domain](#test-8--custom-domain) | HTTPS on your own domain, both ways of setting it up | 30 min per way, plus waiting for DNS |
 | [9. Remove compute and clean up](#test-9--remove-compute-and-clean-up) | Remove compute keeps data; deleting everything | 45–60 min |
 
 **Already done Tests 1, 2 and 7?** Then the app runs on Fargate. Continue in this order:
 1. Tests 3, 4 and 5: they work on Fargate as it is.
 2. Test 6: it starts by switching back to Lambda.
-3. Test 8, which is optional.
+3. Test 8. Get a domain for it first (see its start), since buying one can take a day.
 4. Test 9.
 
 **Cost.** While these tests run, your AWS account pays for:
@@ -845,9 +845,27 @@ To go back to Lambda later, follow 6.1.
 
 ---
 
-## Test 8 – Custom domain (optional)
+## Test 8 – Custom domain
 
-Skip this test if you don't have a domain where you can add DNS records.
+**You need a domain for this test.** It must be a name you control, where you can add DNS records yourself: NS records for Way A, CNAME records for Way B. CloudFront's own address (`d1a2b3c4.cloudfront.net`) belongs to AWS, so it can't be used.
+
+**Ways to get one, cheapest first:**
+1. **A subdomain of your company's domain. Free.**
+   - Ask whoever manages the company's DNS for a test subdomain, such as `sdlc-test.yourcompany.com`.
+   - For Way A, they add the 4 NS records of step 2 once. From then on, everything under that subdomain is yours in Route 53, and you don't need them again.
+   - This is also what most users of the deploy will do, so it's the most realistic test.
+2. **A cheap domain, bought for one year.**
+   - It doesn't need to be `.com`. Any ending works the same way for this test.
+   - Endings such as `.xyz`, `.site`, `.online` or `.click` often cost only a few US dollars for the first year at registrars such as Porkbun or Namecheap. Prices change, so compare before you buy.
+   - **Renewal is often much more expensive than the first year.** Turn off auto-renew if you only need it for testing.
+   - Avoid country endings (`.in`, `.au`, `.eu`…). Many have residency or ID rules.
+   - Route 53 also sells domains (Route 53, then **Registered domains**, then **Register domains**). It's the simplest choice, because it creates the hosted zone for you. Its prices are usually higher than those registrars' prices, so check its price list.
+3. **What doesn't work:** free dynamic-DNS names, such as DuckDNS. They usually only let you point a name at an IP address. This test needs NS or CNAME records, including one whose name starts with an underscore (`_3f2a…`), which is how ACM checks the certificate.
+
+**What the test costs:**
+- the domain;
+- about US$0.50 a month for a Route 53 hosted zone (Way A);
+- nothing for the certificate.
 
 **What this tests:** the app opening on your own address with a valid HTTPS certificate, such as `https://dev.app.example.com`, instead of on CloudFront's address, such as `https://d1a2b3c4.cloudfront.net`.
 
@@ -863,7 +881,11 @@ In the steps below, replace `app.example.com` with a subdomain of a domain you o
 
 **The domain is entered in the web UI,** not in VS Code. The **Domain** field in Step 2 is locked and just shows what the web UI says.
 
-Pick **one** of the two ways below.
+**Test both ways, Way A first.** They exercise different parts of the deploy:
+- **Way A** tests the most: the deploy itself creates the certificate, proves the name is yours, and adds the DNS record.
+- **Way B** tests the case where you bring a certificate and keep your DNS elsewhere.
+
+**Use a different subdomain for Way B,** such as `taskboard2.yourdomain.xyz`. Way A hands its subdomain over to Route 53, so your registrar no longer answers for it.
 
 ### Way A – let AWS manage the subdomain (the deploy does the DNS for you)
 
