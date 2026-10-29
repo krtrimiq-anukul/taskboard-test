@@ -15,3 +15,4 @@ deploy-infra/
 .sdlc
 ../.sdlc
 AWS-DEPLOYMENT-GUIDE.md
+DOMAINS-AND-DNS-GUIDE.md
